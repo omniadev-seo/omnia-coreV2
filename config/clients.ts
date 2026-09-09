@@ -25,7 +25,7 @@ export const CLIENTS: Client[] = [
   { id: "joy", name: "JOYA Home", domain: "joya-home.com", sector: "retail", cms: "Shopify", ecommerce: true, gscProperty: "sc-domain:joya-home.com", ga4PropertyId: "506450323", owner: "", active: true },
 
   // À confirmer : e-commerce ou non ? Passer ecommerce à true pour voir le CA.
-  { id: "mdc", name: "Mademoiselle Culotte", domain: "mademoiselleculotte.com", sector: "retail", cms: "Shopify", ecommerce: false, gscProperty: "sc-domain:mademoiselleculotte.com", ga4PropertyId: "254475854", owner: "", active: true },
+  { id: "mdc", name: "Mademoiselle Culotte", domain: "mademoiselleculotte.com", sector: "retail", cms: "Shopify", ecommerce: true, gscProperty: "sc-domain:mademoiselleculotte.com", ga4PropertyId: "254475854", owner: "", active: true },
   { id: "mer", name: "Merveil Paris", domain: "merveil-paris.com", sector: "retail", cms: "Shopify", ecommerce: false, gscProperty: "sc-domain:merveil-paris.com", ga4PropertyId: "466978829", owner: "", active: true },
   { id: "daf", name: "Daftime", domain: "daftime.ae", sector: "retail", cms: "Shopify", ecommerce: false, gscProperty: "https://daftime.ae/", ga4PropertyId: "519889993", owner: "", active: true },
 
