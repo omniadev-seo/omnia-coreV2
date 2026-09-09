@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #edefeb;
+  --color-surface: #f7f8f5;
+  --color-ink: #181c19;
+  --color-muted: #6e756f;
+  --color-line: #d6dad3;
+  --color-up: #2c6e4f;
+  --color-down: #a93226;
+  --color-accent: #28407f;
+
+  --font-display: "Bricolage Grotesque", sans-serif;
+  --font-sans: "Instrument Sans", system-ui, sans-serif;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-variant-numeric: tabular-nums;
+}
