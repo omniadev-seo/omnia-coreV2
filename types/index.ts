@@ -87,3 +87,41 @@ export type ClientSummary = {
   revenue: Revenue | null;
   revenueTotal: number | null;
 };
+
+/** Offre commerciale d'un client, editable depuis l'application. */
+export type Offer = {
+  clientId: string;
+  monthlyPrice: number;
+  billingDay: number;
+  reportingDay: number;
+  articlesPerMonth: number;
+  backlinksPremium: number;
+  backlinksStandard: number;
+  backlinksNinja: number;
+  backlinksReddit: number;
+  notes: string;
+  updatedAt: string;
+  updatedBy: string;
+};
+
+/** Ligne du portefeuille, aplatie pour etre transmise au navigateur. */
+export type PortfolioRow = {
+  id: string;
+  name: string;
+  domain: string;
+  siteClicks: number;
+  siteClicksPrev: number;
+  siteImpressions: number;
+  siteImpressionsPrev: number;
+  articleClicks: number;
+  articleClicksPrev: number;
+  articleImpressions: number;
+  articleImpressionsPrev: number;
+  articlePosition: number;
+  articlePositionPrev: number;
+  articleCount: number;
+  producedCount: number;
+  revenue: number | null;
+  revenuePrev: number;
+  revenueTotal: number | null;
+};

@@ -3,6 +3,11 @@ import { notFound } from "next/navigation";
 import { getClient } from "@/config/clients";
 import { clientsInScope } from "@/lib/scope";
 import { clientSummary, pageBreakdown } from "@/lib/analytics";
+import { getOffer } from "@/lib/offers";
+import { getMember } from "@/config/members";
+import { auth } from "@/auth";
+import ClientTabs from "@/components/ClientTabs";
+import OfferForm from "@/components/OfferForm";
 import { formatEuros, formatNumber, formatVariation, variation } from "@/lib/format";
 import PageTable from "@/components/PageTable";
 
@@ -34,7 +39,14 @@ export default async function ClientPage({ params }: { params: Promise<{ id: str
   const allowed = await clientsInScope();
   if (!allowed.some((c) => c.id === id)) notFound();
 
-  const [summary, breakdown] = await Promise.all([clientSummary(client), pageBreakdown(client)]);
+  const [summary, breakdown, offer, session] = await Promise.all([
+    clientSummary(client),
+    pageBreakdown(client),
+    getOffer(client.id),
+    auth(),
+  ]);
+
+  const canEdit = getMember(session?.user?.email)?.role === "direction";
 
   const { site, articles, revenue, revenueTotal, producedCount } = summary;
   const articleRows = breakdown.rows.filter((r) => r.isArticle);
@@ -54,9 +66,13 @@ export default async function ClientPage({ params }: { params: Promise<{ id: str
         {client.startDate && ` · client depuis le ${client.startDate}`}
       </p>
 
-      <h2 className="mt-8 border-b border-ink pb-2 font-display text-sm font-semibold">
-        Le site · 30 derniers jours
-      </h2>
+      <ClientTabs
+        offer={<OfferForm offer={offer} canEdit={canEdit} />}
+        performance={
+          <>
+            <h2 className="mt-6 border-b border-ink pb-2 font-display text-sm font-semibold">
+              Le site · 30 derniers jours
+            </h2>
       <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
         <Kpi
           label="Clics organiques"
@@ -177,13 +193,15 @@ export default async function ClientPage({ params }: { params: Promise<{ id: str
         </section>
       )}
 
-      <p className="mt-8 max-w-2xl text-xs text-muted">
-        Cliquez sur un en-tete pour trier, une seconde fois pour inverser. Nos articles sont
-        ceux du suivi d&apos;indexation, rattaches par domaine.
-        {breakdown.capped && " Seules les 800 meilleures pages sont affichees."}
-        {" "}Le cumul Search Console s&apos;arrete a 16 mois. Le CA est attribue au dernier clic
-        de la session.
-      </p>
+            <p className="mt-8 max-w-2xl text-xs text-muted">
+              Cliquez sur un en-tete pour trier, sur le Δ pour trier par evolution. Nos articles
+              sont ceux du suivi d&apos;indexation, rattaches par domaine.
+              {breakdown.capped && " Seules les 800 meilleures pages sont affichees."}
+              {" "}Le cumul Search Console s&apos;arrete a 16 mois.
+            </p>
+          </>
+        }
+      />
     </main>
   );
 }
