@@ -61,26 +61,21 @@ function toRow(offer: Offer): string[] {
 
 /** Toutes les offres, indexees par identifiant de client. */
 export async function allOffers(): Promise<Map<string, Offer>> {
-  return cached("offers", 300, async () => {
+  return cached("offers", 30, async () => {
     const map = new Map<string, Offer>();
-
     try {
       const res = await sheets().spreadsheets.values.get({
         spreadsheetId: OFFERS_SHEET.spreadsheetId,
         range: RANGE,
       });
-
       const rows = res.data.values ?? [];
-      // La premiere ligne porte les en-tetes.
       for (const row of rows.slice(1)) {
         const offer = toOffer(row as string[]);
         if (offer.clientId) map.set(offer.clientId, offer);
       }
     } catch {
-      // Onglet absent ou droits insuffisants : on renvoie une table vide
-      // plutot que de faire echouer la fiche client.
+      // Onglet absent ou droits insuffisants : table vide plutot qu'une page en erreur.
     }
-
     return map;
   });
 }
@@ -90,11 +85,7 @@ export async function getOffer(clientId: string): Promise<Offer> {
   return offers.get(clientId) ?? { clientId, ...EMPTY };
 }
 
-/**
- * Ecrit une offre : mise a jour de la ligne existante, ou ajout a la fin.
- * On relit le Sheet pour trouver la ligne, car son numero peut changer si
- * quelqu'un a trie ou insere des lignes entre-temps.
- */
+/** Met a jour la ligne existante, ou l'ajoute a la fin. */
 export async function saveOffer(offer: Offer): Promise<void> {
   const api = sheets();
 
@@ -105,7 +96,6 @@ export async function saveOffer(offer: Offer): Promise<void> {
 
   const rows = (res.data.values ?? []) as string[][];
 
-  // Cree la ligne d'en-tetes si l'onglet vient d'etre ajoute.
   if (rows.length === 0) {
     await api.spreadsheets.values.update({
       spreadsheetId: OFFERS_SHEET.spreadsheetId,

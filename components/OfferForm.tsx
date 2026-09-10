@@ -35,11 +35,12 @@ export default function OfferForm({
     draft.backlinksNinja +
     draft.backlinksReddit;
 
-  function submit() {
+    function submit() {
     setMessage("");
     startTransition(async () => {
       const result = await updateOffer(draft);
       setMessage(result.message);
+      if (result.ok) window.location.reload();
     });
   }
 
