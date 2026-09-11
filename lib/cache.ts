@@ -1,21 +1,26 @@
-/**
- * Cache en memoire, partage par toutes les requetes du serveur.
- *
- * Sans lui, afficher le portefeuille declenche plus de cent appels aux API
- * Google a chaque rafraichissement de page. Le cache est volontairement
- * simple : il disparait au redemarrage, ce qui suffit pour un outil interne.
- */
-type Entry = { value: unknown; expiresAt: number };
+type Entry = { value: Promise<unknown>; expiresAt: number };
 
 const store = new Map<string, Entry>();
 
-export async function cached<T>(key: string, ttlSeconds: number, compute: () => Promise<T>): Promise<T> {
+export async function cached<T>(
+  key: string,
+  ttlSeconds: number,
+  compute: () => Promise<T>
+): Promise<T> {
   const hit = store.get(key);
-  if (hit && hit.expiresAt > Date.now()) return hit.value as T;
+  if (hit && hit.expiresAt > Date.now()) return hit.value as Promise<T>;
 
-  const value = await compute();
+  const value = compute();
   store.set(key, { value, expiresAt: Date.now() + ttlSeconds * 1000 });
-  return value;
+
+  try {
+    return await value;
+  } catch (error) {
+    // Une requête échouée ne doit pas rester en cache : sinon l'erreur se
+    // rejoue à chaque appel jusqu'à expiration du délai.
+    store.delete(key);
+    throw error;
+  }
 }
 
 export function clearCache() {

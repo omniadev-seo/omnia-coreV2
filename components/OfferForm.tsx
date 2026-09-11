@@ -7,8 +7,8 @@ import type { Offer } from "@/types";
 
 const FIELDS: { key: keyof Offer; label: string; hint?: string; group: string }[] = [
   { key: "monthlyPrice", label: "Prix mensuel (€)", group: "Contrat" },
-  { key: "billingDay", label: "Jour de facturation", hint: "1 a 31", group: "Contrat" },
-  { key: "reportingDay", label: "Jour de reporting", hint: "1 a 31", group: "Contrat" },
+  { key: "billingDay", label: "Jour de facturation", hint: "1 à 31", group: "Contrat" },
+  { key: "reportingDay", label: "Jour de reporting", hint: "1 à 31", group: "Contrat" },
   { key: "articlesPerMonth", label: "Articles par mois", group: "Production" },
   { key: "backlinksPremium", label: "Backlinks premium", group: "Netlinking" },
   { key: "backlinksStandard", label: "Backlinks standard", group: "Netlinking" },
@@ -90,7 +90,7 @@ export default function OfferForm({
           value={draft.notes}
           onChange={(e) => setDraft({ ...draft, notes: e.target.value })}
           rows={3}
-          placeholder="Conditions particulieres, engagement, remise…"
+          placeholder="Conditions particulières, engagement, remise…"
           className="mt-1 w-full rounded-sm border border-line bg-surface px-2 py-1.5 focus:border-transparent focus:outline focus:outline-2 focus:outline-accent"
         />
       </label>
@@ -108,7 +108,7 @@ export default function OfferForm({
 
       {offer.updatedAt && (
         <p className="mt-3 text-xs text-muted">
-          Derniere modification le {offer.updatedAt} par {offer.updatedBy}.
+          Dernière modification le {offer.updatedAt} par {offer.updatedBy}.
         </p>
       )}
     </div>

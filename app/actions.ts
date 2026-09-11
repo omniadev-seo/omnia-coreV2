@@ -18,7 +18,7 @@ export async function updateOffer(input: Offer): Promise<{ ok: boolean; message:
   const session = await auth();
   const member = getMember(session?.user?.email);
 
-  if (!member) return { ok: false, message: "Non connecte." };
+  if (!member) return { ok: false, message: "Non connecté." };
   if (member.role !== "direction") {
     return { ok: false, message: "Seule la direction peut modifier une offre." };
   }
@@ -37,5 +37,5 @@ export async function updateOffer(input: Offer): Promise<{ ok: boolean; message:
   }
 
   revalidatePath(`/client/${input.clientId}`);
-  return { ok: true, message: "Offre enregistree." };
+  return { ok: true, message: "Offre enregistrée." };
 }

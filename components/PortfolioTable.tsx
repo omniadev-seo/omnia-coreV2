@@ -37,7 +37,7 @@ export default function PortfolioTable({ rows }: { rows: PortfolioRow[] }) {
     if (key === sort) setAsc(!asc);
     else {
       setSort(key);
-      // Les baisses d'abord sur les evolutions, les gros volumes d'abord ailleurs.
+      // Les baisses d'abord sur les évolutions, les gros volumes d'abord ailleurs.
       setAsc(key.endsWith("Trend") || key === "name");
     }
   }
@@ -83,7 +83,7 @@ export default function PortfolioTable({ rows }: { rows: PortfolioRow[] }) {
             />
             <Head label="Position" keys={["articlePosition"]} />
             <Head label="CA 30 j" keys={["revenue"]} />
-            <Head label="CA depuis le debut" keys={["revenueTotal"]} />
+            <Head label="CA depuis le début" keys={["revenueTotal"]} />
             <Head label="Part du site" keys={["share"]} />
           </tr>
         </thead>
@@ -91,7 +91,7 @@ export default function PortfolioTable({ rows }: { rows: PortfolioRow[] }) {
           {sorted.map((row) => {
             const siteTrend = variation(row.siteClicks, row.siteClicksPrev);
             const articleTrend = variation(row.articleClicks, row.articleClicksPrev);
-            // Un ecart marque entre le site et nos articles oriente le diagnostic.
+            // Un écart marqué entre le site et nos articles oriente le diagnostic.
             const diverging = Math.abs(siteTrend - articleTrend) > 15;
 
             return (
@@ -104,7 +104,7 @@ export default function PortfolioTable({ rows }: { rows: PortfolioRow[] }) {
                     {row.articleCount} / {row.producedCount} articles suivis
                     {diverging && (
                       <span className="ml-2 text-warn">
-                        {articleTrend < siteTrend ? "nos articles decrochent" : "nous tenons mieux"}
+                        {articleTrend < siteTrend ? "nos articles décrochent" : "nos articles surperforment"}
                       </span>
                     )}
                   </div>

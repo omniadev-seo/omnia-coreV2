@@ -87,7 +87,7 @@ export default async function ClientPage({ params }: { params: Promise<{ id: str
         <Kpi
           label="Position moyenne"
           value={site.position ? site.position.toFixed(1) : "—"}
-          sub={<span className="text-muted">ponderee par les impressions</span>}
+          sub={<span className="text-muted">pondérée par les impressions</span>}
         />
       </div>
 
@@ -126,17 +126,17 @@ export default async function ClientPage({ params }: { params: Promise<{ id: str
             <span className="text-muted">
               {articles.previous.position
                 ? `vs ${articles.previous.position.toFixed(1)} les 30 j precedents`
-                : "ponderee par les impressions"}
+                : "pondérée par les impressions"}
             </span>
           }
         />
         <Kpi
-          label="Clics cumules"
+          label="Clics cumulés"
           value={formatNumber(cumulClicks)}
           sub={
             <span className="text-muted">
               {formatNumber(cumulImpressions)} impressions
-              {breakdown.truncated && " · limite a 16 mois"}
+              {breakdown.truncated && " · limités à 16 mois"}
             </span>
           }
         />
@@ -152,7 +152,7 @@ export default async function ClientPage({ params }: { params: Promise<{ id: str
           }
         />
         <Kpi
-          label="CA depuis le debut"
+          label="CA depuis le début"
           value={revenueTotal !== null ? formatEuros(revenueTotal) : "—"}
           sub={
             <span className="text-muted">
@@ -171,12 +171,12 @@ export default async function ClientPage({ params }: { params: Promise<{ id: str
       {breakdown.missing.length > 0 && (
         <section className="mt-10">
           <h2 className="border-b border-ink pb-2 font-display text-sm font-semibold">
-            Articles sans donnees ({breakdown.missing.length})
+            Articles sans données ({breakdown.missing.length})
           </h2>
           <p className="mt-3 max-w-2xl text-xs text-muted">
             Produits selon le suivi d&apos;indexation, mais absents de Search Console sur la
-            periode. Soit ils sont trop recents, soit l&apos;URL du suivi ne correspond pas a
-            celle reellement publiee.
+            période. Soit ils sont trop récents, soit l&apos;URL du suivi ne correspond pas à
+            celle réellement publiée.
           </p>
           <ul className="mt-3 space-y-1">
             {breakdown.missing.slice(0, 30).map((a) => (
@@ -194,10 +194,10 @@ export default async function ClientPage({ params }: { params: Promise<{ id: str
       )}
 
             <p className="mt-8 max-w-2xl text-xs text-muted">
-              Cliquez sur un en-tete pour trier, sur le Δ pour trier par evolution. Nos articles
-              sont ceux du suivi d&apos;indexation, rattaches par domaine.
-              {breakdown.capped && " Seules les 800 meilleures pages sont affichees."}
-              {" "}Le cumul Search Console s&apos;arrete a 16 mois.
+              Cliquez sur un en-tête pour trier, sur le Δ pour trier par évolution. Nos articles
+              sont ceux du suivi d&apos;indexation, rattachés par domaine.
+              {breakdown.capped && " Seules les 800 meilleures pages sont affichées."}
+              {" "}Le cumul Search Console s&apos;arrête à 16 mois.
             </p>
           </>
         }

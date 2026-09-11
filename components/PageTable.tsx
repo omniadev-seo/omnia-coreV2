@@ -103,11 +103,11 @@ export default function PageTable({ rows }: { rows: PageBreakdownRow[] }) {
               <Head label="Page" keys={["path"]} align="left" />
               <Head label="Clics 30 j" keys={["clicks", "clicksTrend"]} />
               <Head label="Impressions 30 j" keys={["impressions", "impressionsTrend"]} />
-              <Head label="Clics cumules" keys={["cumulativeClicks"]} />
-              <Head label="Impressions cumulees" keys={["cumulativeImpressions"]} />
+              <Head label="Clics cumulés" keys={["cumulativeClicks"]} />
+              <Head label="Impressions cumulées" keys={["cumulativeImpressions"]} />
               <Head label="Position" keys={["position"]} />
               <Head label="CA 30 j" keys={["revenue"]} />
-              <Head label="CA cumule" keys={["revenueTotal"]} />
+              <Head label="CA cumulé" keys={["revenueTotal"]} />
             </tr>
           </thead>
           <tbody>
